@@ -293,9 +293,7 @@ be triggered manually using `company-posframe-quickhelp-show'."
                                                         'face 'company-posframe-metadata))
                              "")))
          (buffer (get-buffer-create company-posframe-buffer)))
-    ;; FIXME: Do not support mouse at the moment, so remove mouse-face
     (setq contents (copy-sequence contents))
-    (remove-text-properties 0 (length contents) '(mouse-face nil) contents)
     (with-current-buffer buffer
       (when company-posframe-show-indicator
         (setq-local mode-line-format `(,(substring backend-names 0
@@ -313,7 +311,9 @@ be triggered manually using `company-posframe-quickhelp-show'."
            :poshandler-extra-info
            (list :company-margin margin
                  :company-prefix-length (length company-prefix))
-           company-posframe-show-params)))
+           company-posframe-show-params)
+    (company-posframe-quickhelp-show)
+    (company-posframe-quickhelp-raise-frame)))
 
 (defun company-posframe-hide ()
   "Hide company-posframe candidate menu."
